@@ -1,0 +1,17 @@
+{
+  "name": "henryjack",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node --env-file=.env dist/server.js",
+    "dev": "tsc -w & node --env-file=.env --watch dist/server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "typescript": "^5.8.3"
+  }
+}
