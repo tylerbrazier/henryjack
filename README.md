@@ -1,5 +1,9 @@
 # Henry Jack
 
+Check the weather while you eat your breakfast.
+
+![logo](logo.png)
+
 ## Development
 
     cp example.env .env
