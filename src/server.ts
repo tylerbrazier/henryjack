@@ -1,13 +1,8 @@
-import express from 'express'
+import app from './app.js'
+import { createServer } from 'node:http'
+import { log } from './utils/logger.js'
+import conf from './utils/conf.js'
 
-const { LISTEN_PORT } = process.env
-
-const app = express()
-
-app.get('/', (req, res) => {
-  res.send('Hello world')
-})
-
-app.listen(LISTEN_PORT, () => {
-  console.log(`Example app listening on port ${LISTEN_PORT}`)
+createServer(app).listen(conf.LISTEN_PORT, () => {
+  log(`Listening on ${conf.LISTEN_PORT}`)
 })
