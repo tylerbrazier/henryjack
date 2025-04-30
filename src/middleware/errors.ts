@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
-import { HTTPError } from '../utils/errors.js'
+import { ValidationError } from '../utils/classes.js'
+import { log } from '../utils/logger.js'
 
 export default function errHandler(err: Error,
                                    req: Request,
@@ -10,7 +11,9 @@ export default function errHandler(err: Error,
   // https://expressjs.com/en/guide/error-handling.html
   if (res.headersSent) return next(err)
 
-  const status = (err instanceof HTTPError) ? err.status : 500
+  log(err)
+
+  const status = (err instanceof ValidationError) ? err.status : 500
 
   res.status(status).send(err.message)
 }
