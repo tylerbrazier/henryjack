@@ -4,6 +4,7 @@
 // See example.env for comments about these settings
 const conf = {
   LISTEN_PORT: process.env.LISTEN_PORT,
+  API_KEY: process.env.API_KEY,
 }
 
 export default conf

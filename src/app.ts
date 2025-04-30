@@ -5,4 +5,4 @@ const app = express()
 
 export default app
 
-app.use(weatherRouter)
+app.use('/', weatherRouter)
