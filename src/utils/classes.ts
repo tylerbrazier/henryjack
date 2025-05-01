@@ -35,5 +35,8 @@ export interface Weather {
       main: string,
       description: string,
     }]
-  }
+  },
+  alerts: [{
+    description: string,
+  }],
 }

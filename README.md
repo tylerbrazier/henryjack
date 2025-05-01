@@ -9,8 +9,9 @@ Use query parameters `lat` and `lon` to choose your location.
 For example `?lat=45&lon=-93` for Blaine, MN.
 (Negative latitude is south; negative longitude is west.)
 
-All responses are json. Successful responses have a `weather` key;
-e.g. `{ "weather": "hot and clear sky" }`.
+All responses are json. Successful responses have a `weather` key
+and possible array of alerts (`null` otherwise)
+e.g. `{ "weather": "hot and tornadoes", alerts: ["take cover!"] }`.
 Unsuccessful responses will include an `error`;
 e.g. `{ "error": "something went wrong" }`.
 
@@ -32,7 +33,6 @@ e.g. `{ "error": "something went wrong" }`.
 ## TODO
 
 - add tests
-- include alerts
 - docker
 - deploy on server
 - use [concurrently](https://www.npmjs.com/package/concurrently)

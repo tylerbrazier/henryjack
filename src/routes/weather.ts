@@ -10,8 +10,12 @@ router.get('/', route)
 
 async function route(req: Request, res: Response) {
   const json = await api(parseCoordinates(req))
+  console.log(json)
 
-  res.json({ weather: describe(json) })
+  res.json({
+    weather: describe(json),
+    alerts: json?.alerts?.map(a => a.description) || null,
+  })
 }
 
 // TODO maybe this belongs in a Weather class
