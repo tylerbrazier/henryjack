@@ -29,5 +29,11 @@ export class Coordinates {
 }
 
 export interface Weather {
-  // TODO
+  current: {
+    temp: number,
+    weather: [{
+      main: string,
+      description: string,
+    }]
+  }
 }

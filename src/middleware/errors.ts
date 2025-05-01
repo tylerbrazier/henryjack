@@ -15,5 +15,5 @@ export default function errHandler(err: Error,
 
   const status = (err instanceof ValidationError) ? err.status : 500
 
-  res.status(status).send(err.message)
+  res.status(status).json({ error: err.message })
 }
