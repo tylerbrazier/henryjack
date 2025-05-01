@@ -32,7 +32,7 @@ e.g. `{ "error": "something went wrong" }`.
 
 ## TODO
 
-- add tests
+- add more tests
 - docker
 - deploy on server
 - use [concurrently](https://www.npmjs.com/package/concurrently)
