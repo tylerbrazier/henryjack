@@ -30,7 +30,84 @@ suite('weather', async () => {
     assert.deepStrictEqual(json, expect)
   })
 
-  // TODO add more tests
+  test('cold if low temp', async () => {
+    setTemp(-40)
+    setDescription('snow')
+    setAlerts()
+
+    const resp = await fetch('http://localhost:8080?lat=40&lon=40')
+    assert(resp.ok)
+
+    const json = await resp.json()
+    const expect = { weather: 'cold and snow', alerts: null, }
+
+    assert.deepStrictEqual(json, expect)
+  })
+
+  test('moderate if normal temp', async () => {
+    setTemp(70)
+    setDescription('comfortable')
+    setAlerts()
+
+    const resp = await fetch('http://localhost:8080?lat=40&lon=40')
+    assert(resp.ok)
+
+    const json = await resp.json()
+    const expect = { weather: 'moderate and comfortable', alerts: null, }
+
+    assert.deepStrictEqual(json, expect)
+  })
+
+  test('error if no lat', async () => {
+    const resp = await fetch('http://localhost:8080?lon=40')
+    assert(!resp.ok)
+    assert.strictEqual(resp.status, 400)
+
+    const json = await resp.json()
+
+    assert.deepStrictEqual(Object.keys(json), [ 'error' ])
+    assert.match(json.error, /lat/)
+  })
+
+  test('error if no lon', async () => {
+    const resp = await fetch('http://localhost:8080?lat=40')
+    assert(!resp.ok)
+    assert.strictEqual(resp.status, 400)
+
+    const json = await resp.json()
+
+    assert.deepStrictEqual(Object.keys(json), [ 'error' ])
+    assert.match(json.error, /lon/)
+  })
+
+  test('error if invalid lat', async () => {
+    let resp, json
+    for (let lat of [ '91', '-91', 'not_number' ]) {
+      resp = await fetch(`http://localhost:8080?lat=${lat}&lon=40`)
+      assert(!resp.ok)
+      assert.strictEqual(resp.status, 400)
+
+      json = await resp.json()
+
+      assert.deepStrictEqual(Object.keys(json), [ 'error' ])
+      assert.match(json.error, /lat/)
+    }
+  })
+
+  test('error if invalid lon', async () => {
+    let resp, json
+    for (let lon of [ '181', '-181', 'not_number' ]) {
+      resp = await fetch(`http://localhost:8080?lat=40&lon=${lon}`)
+      assert(!resp.ok)
+      assert.strictEqual(resp.status, 400)
+
+      json = await resp.json()
+
+      assert.deepStrictEqual(Object.keys(json), [ 'error' ])
+      assert.match(json.error, /lon/)
+    }
+  })
+
 })
 
 async function beforeHook(): Promise<void> {

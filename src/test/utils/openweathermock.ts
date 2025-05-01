@@ -31,6 +31,7 @@ export function setDescription(d: string): void {
   description = d
 }
 
-export function setAlerts(a: string[]): void {
-  alerts = a.map(s => ({ description: s }))
+export function setAlerts(a?: string[]): void {
+  if (a) alerts = a.map(s => ({ description: s }))
+  else alerts = undefined
 }

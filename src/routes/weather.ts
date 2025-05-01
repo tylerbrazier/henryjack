@@ -10,7 +10,6 @@ router.get('/', route)
 
 async function route(req: Request, res: Response) {
   const json = await api(parseCoordinates(req))
-  console.log(json)
 
   res.json({
     weather: describe(json),
