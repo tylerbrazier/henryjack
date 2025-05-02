@@ -15,7 +15,7 @@ e.g. `{ "weather": "hot and tornadoes", alerts: ["take cover!"] }`.
 Unsuccessful responses will include an `error`;
 e.g. `{ "error": "something went wrong" }`.
 
-## Development
+## Setup
 
     cp example.env .env
     chmod 600 .env
@@ -23,16 +23,15 @@ e.g. `{ "error": "something went wrong" }`.
 
     npm install
     npm run build
+
+    # for development:
     npm run dev
 
-## Production
-
-    npm run build
-    npm start
+    # for production:
+    docker build -t hj .
+    docker run -d -p 80:8080 --env-file .env hj
 
 ## TODO
 
-- docker
-- deploy on server
 - use [concurrently](https://www.npmjs.com/package/concurrently)
   or a bash script to wrap the bg dev watch processes
