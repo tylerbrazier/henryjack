@@ -110,6 +110,18 @@ suite('weather', async () => {
     }
   })
 
+  // TODO move this into its own test file and DRY up the boilerplate
+  test('404', async () => {
+    const resp = await fetch(`${host}/nope`)
+    assert(!resp.ok)
+    assert.strictEqual(resp.status, 404)
+
+    const json = await resp.json()
+
+    assert.deepStrictEqual(Object.keys(json), [ 'error' ])
+    assert.match(json.error, /not found/i)
+  })
+
 })
 
 async function beforeHook(): Promise<void> {
