@@ -5,9 +5,11 @@ import { Server } from 'node:http'
 import mockOWM from './utils/openweathermock.js'
 import { setTemp, setDescription, setAlerts } from './utils/openweathermock.js'
 import app from '../app.js'
+import conf from '../utils/conf.js'
 
 let mockEndpoint: Server
 let testServer: Server
+const host = `http://localhost:${conf.LISTEN_PORT}`
 
 suite('weather', async () => {
   before(beforeHook)
@@ -18,7 +20,7 @@ suite('weather', async () => {
     setDescription('humid')
     setAlerts(['tornado watch!'])
 
-    const resp = await fetch('http://localhost:8080?lat=40&lon=40')
+    const resp = await fetch(`${host}?lat=40&lon=40`)
     assert(resp.ok)
 
     const json = await resp.json()
@@ -35,7 +37,7 @@ suite('weather', async () => {
     setDescription('snow')
     setAlerts()
 
-    const resp = await fetch('http://localhost:8080?lat=40&lon=40')
+    const resp = await fetch(`${host}?lat=40&lon=40`)
     assert(resp.ok)
 
     const json = await resp.json()
@@ -49,7 +51,7 @@ suite('weather', async () => {
     setDescription('comfortable')
     setAlerts()
 
-    const resp = await fetch('http://localhost:8080?lat=40&lon=40')
+    const resp = await fetch(`${host}?lat=40&lon=40`)
     assert(resp.ok)
 
     const json = await resp.json()
@@ -59,7 +61,7 @@ suite('weather', async () => {
   })
 
   test('error if no lat', async () => {
-    const resp = await fetch('http://localhost:8080?lon=40')
+    const resp = await fetch(`${host}?lon=40`)
     assert(!resp.ok)
     assert.strictEqual(resp.status, 400)
 
@@ -70,7 +72,7 @@ suite('weather', async () => {
   })
 
   test('error if no lon', async () => {
-    const resp = await fetch('http://localhost:8080?lat=40')
+    const resp = await fetch(`${host}?lat=40`)
     assert(!resp.ok)
     assert.strictEqual(resp.status, 400)
 
@@ -83,7 +85,7 @@ suite('weather', async () => {
   test('error if invalid lat', async () => {
     let resp, json
     for (let lat of [ '91', '-91', 'not_number' ]) {
-      resp = await fetch(`http://localhost:8080?lat=${lat}&lon=40`)
+      resp = await fetch(`${host}?lat=${lat}&lon=40`)
       assert(!resp.ok)
       assert.strictEqual(resp.status, 400)
 
@@ -97,7 +99,7 @@ suite('weather', async () => {
   test('error if invalid lon', async () => {
     let resp, json
     for (let lon of [ '181', '-181', 'not_number' ]) {
-      resp = await fetch(`http://localhost:8080?lat=40&lon=${lon}`)
+      resp = await fetch(`${host}?lat=40&lon=${lon}`)
       assert(!resp.ok)
       assert.strictEqual(resp.status, 400)
 
